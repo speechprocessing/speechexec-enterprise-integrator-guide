@@ -18,8 +18,8 @@ internal class MobileServiceConnector
     private static string SEEAppInterfaceServiceUrl = "http://localhost/";
 
     private static string TestDictationFilePath = @"c:\Users\joco\Documents\speechexec\a_finish\adam0004.wav";
-    private static string TestDictationID001 = Guid.NewGuid().ToString();
-    private static string TestDictationID002 = Guid.NewGuid().ToString();
+    private static string TestDictationID = Guid.NewGuid().ToString();
+    private static Guid? _TestDictationIDWithAttachment;
 
     private static HttpClient _AppInterfaceHttpClient = new HttpClient();
 
@@ -51,7 +51,7 @@ internal class MobileServiceConnector
             { streamContent, "see_dictation_audio_file", Path.GetFileName(TestDictationFilePath) },
 
             // payload
-            { new StringContent(TestDictationID001), "DictationId" },
+            { new StringContent(TestDictationID), "DictationId" },
             { new StringContent("2"), "Status" },
             { new StringContent("0"), "Priority" },
             { new StringContent("Memo"), "Worktype" },
@@ -77,7 +77,7 @@ internal class MobileServiceConnector
     public async Task<HttpStatusCode> QuerySingleDictationInTask()
     {
         // Attach the GET /app/dictations REST endpoint to the root url, including the dictation ID we're looking for
-        var queryDictationGetEndPointUri = new Uri(new Uri(SEEAppInterfaceServiceUrl), $"/SEEAppInterface/app/dictations/{TestDictationID001}");
+        var queryDictationGetEndPointUri = new Uri(new Uri(SEEAppInterfaceServiceUrl), $"/SEEAppInterface/app/dictations/{TestDictationID}");
 
         // Call the GET /app/dictations endpoint
         var response = await _AppInterfaceHttpClient.GetAsync(queryDictationGetEndPointUri);
@@ -90,6 +90,30 @@ internal class MobileServiceConnector
                 var result = await streamReader.ReadToEndAsync();
                 var dict = JsonSerializer.Deserialize<GetDictationsResponse>(result);
                 // the requested dictation metadata is found in dict.data[0].files[0] object
+            }
+        }
+
+        return response.StatusCode;
+    }
+
+    public async Task<HttpStatusCode> QueryAllDictationsForArchiveFolderInTask()
+    {
+        // Attach the GET /app/dictations REST endpoint to the root url, including the dictation ID we're looking for
+        var queryDictationGetEndPointUri = new Uri(new Uri(SEEAppInterfaceServiceUrl), $"/SEEAppInterface/app/dictations?isArchive=true");
+
+        // Call the GET /app/dictations endpoint
+        var response = await _AppInterfaceHttpClient.GetAsync(queryDictationGetEndPointUri);
+
+        // Deserialize json response
+        using (var responseStream = await response.Content.ReadAsStreamAsync())
+        {
+            using (StreamReader streamReader = new StreamReader(responseStream, Encoding.UTF8))
+            {
+                var result = await streamReader.ReadToEndAsync();
+                var dict = JsonSerializer.Deserialize<GetDictationsResponse>(result);
+                // the requested dictation metadata is found in dict.data[0].files[0] object
+
+                _TestDictationIDWithAttachment = dict?.data?.FirstOrDefault()?.files?.FirstOrDefault(f => f.HasAttachment)?.DictationID;
             }
         }
 
@@ -123,7 +147,7 @@ internal class MobileServiceConnector
     public async Task<HttpStatusCode> DownloadAttachmentInTask()
     {
         // Attach the GET /app/dictations/{DictationID}/attachment/download REST endpoint to the root url, including the dictation ID we're looking for
-        var downloadDictationGetEndPointUri = new Uri(new Uri(SEEAppInterfaceServiceUrl), $"/SEEAppInterface/app/dictations/{TestDictationID001}/attachment/download");
+        var downloadDictationGetEndPointUri = new Uri(new Uri(SEEAppInterfaceServiceUrl), $"/SEEAppInterface/app/dictations/{_TestDictationIDWithAttachment}/attachment/download");
 
         // Call the GET /app/dictations endpoint
         var response = await _AppInterfaceHttpClient.GetAsync(downloadDictationGetEndPointUri);
@@ -195,7 +219,7 @@ internal class MobileServiceConnector
         return new GetDictationInfoListRequest
         {
             CRI = Guid.NewGuid(),
-            dictationIds = new[] { TestDictationID001, TestDictationID002 },
+            dictationIds = new[] { TestDictationID, _TestDictationIDWithAttachment?.ToString() },
         };
     }
 }
