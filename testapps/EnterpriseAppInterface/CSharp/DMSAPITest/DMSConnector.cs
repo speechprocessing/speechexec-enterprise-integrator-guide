@@ -14,6 +14,8 @@ internal class DMSConnector
     // Url of the SpeechExec Enterprise App Interface service
     private static string SEEAppInterfaceServiceUrl = "http://localhost/";
 
+    private static Guid? _TestDictationID;
+
     private static HttpClient _AppInterfaceHttpClient = new HttpClient();
 
     public DMSConnector()
@@ -84,6 +86,29 @@ internal class DMSConnector
                 var result = await streamReader.ReadToEndAsync();
                 var dict = JsonSerializer.Deserialize<GetDMSDictationsResponse>(result);
                 // the requested dictation metadatas are found in dict.data array
+
+                _TestDictationID = dict?.data?.FirstOrDefault()?.files?.FirstOrDefault(f => f.HasAttachment)?.DictationID;
+            }
+        }
+
+        return response.StatusCode;
+    }
+
+    public async Task<HttpStatusCode> DownloadAttachmentInTask(string? userName)
+    {
+        // Attach the GET /dms/dictations/{AuthorName}/{DictationID}/attachment REST endpoint to the root url, including the dictation ID we're looking for
+        var downloadDictationGetEndPointUri = new Uri(new Uri(SEEAppInterfaceServiceUrl), $"/SEEAppInterface/app/dictations/{userName}/{_TestDictationID}/attachment");
+
+        // Call the GET /app/dictations endpoint
+        var response = await _AppInterfaceHttpClient.GetAsync(downloadDictationGetEndPointUri);
+
+        // Read result stream content
+        using (var responseStream = await response.Content.ReadAsStreamAsync())
+        {
+            using (StreamReader streamReader = new StreamReader(responseStream, Encoding.UTF8))
+            {
+                var result = await streamReader.ReadToEndAsync();
+                // the result contains the attachment's file content
             }
         }
 
