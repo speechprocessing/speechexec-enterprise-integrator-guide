@@ -17,16 +17,18 @@ internal class MobileServiceConnector
     // Url of the SpeechExec Enterprise App Interface service
     private static string SEEAppInterfaceServiceUrl = "http://localhost/";
 
-    private static string TestDictationFilePath = @"c:\Users\joco\Documents\speechexec\a_finish\adam0004.wav";
+    // Important: use your own dictation's file path here!
+    private static string TestDictationFilePath = @"d:\testdata\dict001.wav";
+
     private static string TestDictationID = Guid.NewGuid().ToString();
     private static Guid? _TestDictationIDWithAttachment;
 
     private static HttpClient _AppInterfaceHttpClient = new HttpClient();
 
-    public MobileServiceConnector()
+    public MobileServiceConnector(string? userName, string? password)
     {
         Console.WriteLine("Requesting OAuth token...");
-        var tokenQueryTask = QueryOAuthTokenInTask();
+        var tokenQueryTask = QueryOAuthTokenInTask(userName, password);
         tokenQueryTask.Wait();
         var oauthToken = tokenQueryTask.Result;
         Console.WriteLine("Done.");
@@ -187,16 +189,16 @@ internal class MobileServiceConnector
         return response.StatusCode;
     }
 
-    private async Task<string?> QueryOAuthTokenInTask()
+    private async Task<string?> QueryOAuthTokenInTask(string? userName, string? password)
     {
         // Attach the POST /app/token REST endpoint to the root url
         var queryTokenPostEndPointUri = new Uri(new Uri(SEEAppInterfaceServiceUrl), "/SEEAppInterface/app/token");
 
         // Create an url-encoded form request object
-        var contentParams = new Dictionary<string, string>();
+        var contentParams = new Dictionary<string, string?>();
         contentParams.Add("grant_type", "password");
-        contentParams.Add("username", "seagile1");
-        contentParams.Add("password", "JUzer12");
+        contentParams.Add("username", userName);
+        contentParams.Add("password", password);
         var content = new FormUrlEncodedContent(contentParams);
 
         // Call the POST /app/token endpoint with the url-encoded form data

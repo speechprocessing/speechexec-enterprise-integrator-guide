@@ -23,6 +23,7 @@ internal class MasterDataConnector
     public MasterDataConnector()
     {
         // Set the API key in the request header for authentication
+        // Important: use your own API key as the 2nd parameter!
         _AppInterfaceHttpClient.DefaultRequestHeaders.Add("x-sps-api-key", "AdminApiKey_TestGroup_678e1f10-53b0-4b8d-af36-7067b52466ea");
     }
 
