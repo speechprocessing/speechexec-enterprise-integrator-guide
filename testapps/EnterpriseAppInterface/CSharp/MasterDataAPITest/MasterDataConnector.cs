@@ -30,7 +30,7 @@ internal class MasterDataConnector
     // Insert a new, hard-defined MasterData record to the SEEMASTERDATA SQL DB
     public async Task InsertNewMasterDataRecordInTask()
     {
-        // Attach the POST /masterdata/dataitems REST endpoint to the root url
+        // Concatenate the POST /masterdata/dataitems REST endpoint to the root url
         var masterDataPostEndPointUri = new Uri(new Uri(SEEAppInterfaceServiceUrl), "/SEEAppInterface/masterdata/dataitems");
         // Create an 'InsertMasterDataRequest' json request object
         var request = CreateTestMasterDataRecord();
@@ -59,7 +59,7 @@ internal class MasterDataConnector
     // Query MasterData record by ID from the SEEMASTERDATA SQL DB
     public async Task<QueryMasterDataResponse?> QueryMasterDataRecordInTask()
     {
-        // Attach the GET /masterdata/dataitems REST endpoint to the root url, including the MasterData record's ID we're looking for
+        // Concatenate the GET /masterdata/dataitems REST endpoint to the root url, including the MasterData record's ID we're looking for
         var masterDataPostEndPointUri = new Uri(new Uri(SEEConfigServiceUrl), $"/SEEConfigServiceForIIS/masterdata/dataitems/{MasterDataRecordID}");
 
         // Call the GET /masterdata/dataitems endpoint

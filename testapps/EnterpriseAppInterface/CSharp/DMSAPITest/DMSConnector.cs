@@ -27,7 +27,7 @@ internal class DMSConnector
 
     public async Task<Tuple<HttpStatusCode, UserData[]?>> QueryUsersInTask()
     {
-        // Attach the GET /dms/users REST endpoint to the root url
+        // Concatenate the GET /dms/users REST endpoint to the root url
         var queryUsersGetEndPointUri = new Uri(new Uri(SEEAppInterfaceServiceUrl), $"/SEEAppInterface/dms/users");
 
         // Call the GET /dms/users endpoint
@@ -51,7 +51,7 @@ internal class DMSConnector
 
     public async Task<HttpStatusCode> QueryDictationsForUserInTask(string? userName)
     {
-        // Attach the GET /dms/dictations/{AuthorName} REST endpoint to the root url
+        // Concatenate the GET /dms/dictations/{AuthorName} REST endpoint to the root url
         var queryDictationsGetEndPointUri = new Uri(new Uri(SEEAppInterfaceServiceUrl), $"/SEEAppInterface/dms/dictations/{userName}");
 
         // Call the GET /dms/dictations/{AuthorName} endpoint
@@ -73,7 +73,7 @@ internal class DMSConnector
 
     public async Task<HttpStatusCode> QueryDictationsForAllUsersInTask()
     {
-        // Attach the GET /dms/dictations REST endpoint to the root url
+        // Concatenate the GET /dms/dictations REST endpoint to the root url
         var queryDictationsGetEndPointUri = new Uri(new Uri(SEEAppInterfaceServiceUrl), "/SEEAppInterface/dms/dictations");
 
         // Call the GET /dms/dictations endpoint
@@ -97,7 +97,7 @@ internal class DMSConnector
 
     public async Task<HttpStatusCode> DownloadAttachmentInTask(string? userName)
     {
-        // Attach the GET /dms/dictations/{AuthorName}/{DictationID}/attachment REST endpoint to the root url, including the dictation ID we're looking for
+        // Concatenate the GET /dms/dictations/{AuthorName}/{DictationID}/attachment REST endpoint to the root url, including the dictation ID we're looking for
         var downloadDictationGetEndPointUri = new Uri(new Uri(SEEAppInterfaceServiceUrl), $"/SEEAppInterface/app/dictations/{userName}/{_TestDictationID}/attachment");
 
         // Call the GET /app/dictations endpoint
