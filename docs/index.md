@@ -12,12 +12,12 @@ The main goal of Enterprise App Interface is to provide various programmatic end
 
 ## Integration endpoints
 Enterprise App Interface offers multiple integration end-point groups. These endpoints are REST services grouped into the following main areas:
-- /masterdata endpoints: help integrations with Hospital Information Systems
-- /dms endpoints: help integrations with Document Management Systems
+- [`/masterdata` endpoints](./see/enterprise-app-interface/endpoints/masterdata/01_MasterDataOverview.md): help integrations with Hospital Information Systems
+- [`/dms` endpoints](./see/enterprise-app-interface/endpoints/dms/01_DmsOverview.md): help integrations with Document Management Systems
 - /app endpoints: offer possibilites to access the on-premise SpeechExec Enterprise dictations from mobile devices via authenticated calls
 
 
 ## Test applications
 Test applications demonstrating the main use-cases and technical possibilites can be found here:
- 
+
 [https://github.com/speechprocessing/speechexec-enterprise-integrator-guide/tree/main/testapps/EnterpriseAppInterface](https://github.com/speechprocessing/speechexec-enterprise-integrator-guide/tree/main/testapps/EnterpriseAppInterface){:target="_blank"}
