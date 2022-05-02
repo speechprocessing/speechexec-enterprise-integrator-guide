@@ -21,3 +21,6 @@ The `/dms` endpoints of Enterprise App Interface can be used to realize the foll
 A simplified view:
 ![/dms workflow overview](static/images/diagrams/EAI_DMS_overview.png)
 
+The communication flow looks like the following:
+
+![/masterdata workflow overview](static/images/diagrams/EAI_DMS_GeneralCommunicationFlow.png)
