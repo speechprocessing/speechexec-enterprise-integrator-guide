@@ -12,7 +12,7 @@ nav_order: 30
 ## Prerequisites
 
 HTTP request authentication must be set up properly.
-You can find more information [here](./10_MasterDataAuthentication.md).
+You can find more information [here](./10_DmsAuthentication.md).
 
 ## Procedure
 
