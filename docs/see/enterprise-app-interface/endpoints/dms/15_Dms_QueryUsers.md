@@ -8,15 +8,26 @@ nav_order: 15
 ---
 
 # Query all author users
+{% include see/enterprise-app-interface/EAI_AllEndpoints_TOC.md %}
 
 ## Prerequisites
 
 HTTP request authentication must be set up properly.
 You can find more information [here](./10_DmsAuthentication.md).
 
+## Overview
+
+![/dms/users workflow overview](static/images/diagrams/EAI_DMS_GetUsers.png)
+
 ## Procedure
 
 The list of `SpeechExec Enterprise` author users can be queried using the `GET /dms/users` endpoint. This endpoint does not require any parameters.
+
+The query first collects those users who satisfy the following criterias:
+- those direct members of `SEEAllowedAuthMobile` AD group who are also direct members of any sub-group in `SEEAllowedAuth` AD group
+- all direct members of those sub-groups in `SEEAllowedAuthMobile` AD group, which has a matching named sub-group in the `SEEAllowedAuth` AD group
+
+Then all these users are validated if they are members of the Enterprise subsystem and only the valid users are involved in the result.
 
 The call returns with the following JSON response:
 
@@ -43,6 +54,9 @@ The call returns with `HTTP 200-OK` if querying the list of users is successful.
 In all error cases, the exact error reason can be found in the response body, in the `FailureCode` field.
 
 ## Example
+
+### Test application
+{% include see/enterprise-app-interface/dms/EAI_AllEndpoints_TestApplication.md %}
 
 ### Return with `HTTP 401-Unauthorized` error response due to not matching API key
 

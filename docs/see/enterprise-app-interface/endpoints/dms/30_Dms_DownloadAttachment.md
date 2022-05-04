@@ -8,17 +8,24 @@ nav_order: 30
 ---
 
 # Download attached document of a dictation
+{% include see/enterprise-app-interface/EAI_AllEndpoints_TOC.md %}
 
 ## Prerequisites
 
 HTTP request authentication must be set up properly.
 You can find more information [here](./10_DmsAuthentication.md).
 
+## Overview
+
+![/dms/dictations workflow overview](static/images/diagrams/EAI_DMS_DownloadAttachedDocument.png)
+
 ## Procedure
 
 To download the attached document of a given dictation belonging to a specific `SpeechExec Enterprise` author user, the `GET /dms/dictations/{AuthorName}/{DictationID}/attachment` endpoint can be used. This endpoint requires an `AuthorName` and a `DictationID` query parameters which define the `SpeechExec Enterprise` author user and the desired dictation's ID to look for, respectively.
 
-The call returns with a file stream of the attached document.
+The dictation file is searched in the user's archive folder first, then in the user's finished dictation's folder if it wasn't found in the archive.
+
+The call returns with a file stream of the dictation's attached document.
 
 The call returns with `HTTP 400-BadRequest` in the following cases:
 
@@ -41,6 +48,9 @@ The call returns with `HTTP 200-OK` if the attachment download is successful.
 In all error cases, the exact error reason can be found in the response body, in the `FailureCode` field.
 
 ## Example
+
+### Test application
+{% include see/enterprise-app-interface/dms/EAI_AllEndpoints_TestApplication.md %}
 
 ### Return with `HTTP 400-BadRequest` error response due to not valid dictation ID
 

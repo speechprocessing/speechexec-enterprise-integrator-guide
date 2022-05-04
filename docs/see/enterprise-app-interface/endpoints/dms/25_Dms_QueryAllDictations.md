@@ -8,15 +8,22 @@ nav_order: 25
 ---
 
 # Query all dictations for all users
+{% include see/enterprise-app-interface/EAI_AllEndpoints_TOC.md %}
 
 ## Prerequisites
 
 HTTP request authentication must be set up properly.
 You can find more information [here](./10_DmsAuthentication.md).
 
+## Overview
+
+![/dms/dictations workflow overview](static/images/diagrams/EAI_DMS_GetAllDictations.png)
+
 ## Procedure
 
 The list of dictations for all `SpeechExec Enterprise` users can be queried using the `GET /dms/dictations` endpoint. This endpoint does not require any parameters.
+
+Dictation files are searched in the user's archive folder first, then in the user's finished dictation's folder if they weren't found in the archive.
 
 The call returns with the following JSON response:
 
@@ -58,6 +65,9 @@ The call returns with `HTTP 200-OK` if querying the list of dictations is succes
 In all error cases, the exact error reason can be found in the response body, in the `FailureCode` field.
 
 ## Example
+
+### Test application
+{% include see/enterprise-app-interface/dms/EAI_AllEndpoints_TestApplication.md %}
 
 ### Return with `HTTP 401-Unauthorized` error response due to not matching API key
 

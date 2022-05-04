@@ -8,15 +8,22 @@ nav_order: 20
 ---
 
 # Query dictations for a given user
+{% include see/enterprise-app-interface/EAI_AllEndpoints_TOC.md %}
 
 ## Prerequisites
 
 HTTP request authentication must be set up properly.
 You can find more information [here](./10_DmsAuthentication.md).
 
+## Overview
+
+![/dms/dictations/{AuthorName} workflow overview](static/images/diagrams/EAI_DMS_GetDictationsForAuthor.png)
+
 ## Procedure
 
 The list of dictations for a given `SpeechExec Enterprise` user can be queried using the `GET /dms/dictations/{AuthorName}` endpoint. This endpoint requires an `AuthorName` query parameter which defines the `SpeechExec Enterprise` author user to look for.
+
+Dictation files are searched in the user's archive folder first, then in the user's finished dictation's folder if they weren't found in the archive.
 
 The call returns with the following JSON response:
 
@@ -56,7 +63,7 @@ Each dictation object contains the following fields:
 - `AudioFileName`: dictation file name, with extension
 - `DictationState`: dictation's workflow state
 - `HasAttachment`: true if the dictation has attached document, false otherwise
-- `IsArchive`: true if the dictation is located in the archive folder, false otherwise
+- `IsArchive`: true if the dictation is located in the author user's archive folder, false otherwise
 - `SubfolderHierarchy`: additional subfolder hierarchy under the root dictation folder, can be empty if no subfolder is used. Example: if the finished folder is `c:\dictations\finished` and the dictation is located in `c:\dictations\finished\Sarah\urgent`, then the subfolder hierarchy would be `Sarah\urgent`.
 - `LastChangedDateTimeUtc`: The last time the dictation was changed, in UTC date format
 
@@ -74,6 +81,9 @@ The call returns with `HTTP 200-OK` if querying the list of dictations is succes
 In all error cases, the exact error reason can be found in the response body, in the `FailureCode` field.
 
 ## Example
+
+### Test application
+{% include see/enterprise-app-interface/dms/EAI_AllEndpoints_TestApplication.md %}
 
 ### Return with `HTTP 400-BadRequest` error response due to not existing user
 
