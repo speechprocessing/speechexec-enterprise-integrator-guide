@@ -6,7 +6,7 @@ nav_order: 10
 # Enterprise App Interface integrations
 
 ## What is Enterprise App Interface?
-Enterprise App Interface is a web service application hosted in Internet Information Services for Windows (IIS). This product was introduced with SpeechExec 8.0 in 2022.
+Enterprise App Interface is a web service application built for and running in Internet Information Services for Windows (IIS). This product was introduced with SpeechExec 8.0 in 2022.
 The main goal of Enterprise App Interface is to provide various programmatic endpoints for integrators, so they can relatively easily create integrations between the SpeechExec Enterprise ecosystem and other existing, business-specific systems.
 
 
