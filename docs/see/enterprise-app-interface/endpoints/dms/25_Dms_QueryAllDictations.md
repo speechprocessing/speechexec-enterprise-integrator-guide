@@ -52,6 +52,8 @@ The call returns with the following JSON response:
 }
 ```
 
+{% include see/enterprise-app-interface/EAI_AllEndpoints_CRI.md %}
+
 The `data` member in the JSON response contains as many items as the number of users which dictations could be queried for. It can also be empty if there was no users found or dictations could not be queried for any of them.
 
 The detailed description of the JSON structure is available [here](./20_Dms_QueryDictationsForUser.md).

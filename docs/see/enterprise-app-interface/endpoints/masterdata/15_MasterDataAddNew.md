@@ -15,6 +15,8 @@ nav_order: 15
 HTTP request authentication must be set up properly.
 You can find more information [here](./10_MasterDataAuthentication.md).
 
+The SQL server database must have a table with name `MasterDataItemsTableForSpeechExecEnterprise`. Configuring the database connection settings is the responsibility of the service administrator. See [service settings](./05_MasterDataServiceSettings.md) for more information.
+
 ## Overview
 
 ![/masterdata workflow overview](static/images/diagrams/EAI_MasterData_NewDataInsert.png)
@@ -53,6 +55,8 @@ A new master data record can be inserted to the master data DB using the `POST /
     }
 }
 ```
+
+{% include see/enterprise-app-interface/EAI_AllEndpoints_CRI.md %}
 
 The call returns with `HTTP 400-BadRequest` in the following cases:
 

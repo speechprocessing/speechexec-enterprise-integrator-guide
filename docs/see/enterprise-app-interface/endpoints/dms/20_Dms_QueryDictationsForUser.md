@@ -51,6 +51,8 @@ The call returns with the following JSON response:
 }
 ```
 
+{% include see/enterprise-app-interface/EAI_AllEndpoints_CRI.md %}
+
 This JSON structure is designed to store dictation lists for multiple users, but in this occasion it contains only 1 item, for the specific `{AuthorName}` user.
 
 The `data` member contains the following fields:
@@ -70,7 +72,7 @@ Each dictation object contains the following fields:
 The call returns with `HTTP 400-BadRequest` in the following cases:
 
 - `{AuthorName}` is null or empty string
-- The requested user is not member of the Enterprise subsystem
+- The requested user is not member of the `SpeechExec Enterprise` subsystem
 
 The call returns with `HTTP 401-Unauthorized` if the authentication prerequisites are not fulfilled.
 

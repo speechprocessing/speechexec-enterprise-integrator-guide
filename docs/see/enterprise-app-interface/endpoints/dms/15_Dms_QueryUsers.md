@@ -27,7 +27,7 @@ The query first collects those users who satisfy the following criterias:
 - those direct members of `SEEAllowedAuthMobile` AD group who are also direct members of any sub-group in `SEEAllowedAuth` AD group
 - all direct members of those sub-groups in `SEEAllowedAuthMobile` AD group, which has a matching named sub-group in the `SEEAllowedAuth` AD group
 
-Then all these users are validated if they are members of the Enterprise subsystem and only the valid users are involved in the result.
+Then all these users are validated if they are members of the `SpeechExec Enterprise` subsystem and only the valid users are involved in the result.
 
 The call returns with the following JSON response:
 
@@ -42,6 +42,8 @@ The call returns with the following JSON response:
     ]
 }
 ```
+
+{% include see/enterprise-app-interface/EAI_AllEndpoints_CRI.md %}
 
 The `users` field contains the list of retrieved user objects. Each user object has a `username` field.
 

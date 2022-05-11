@@ -31,7 +31,7 @@ The call returns with `HTTP 400-BadRequest` in the following cases:
 
 - `{AuthorName}` is null or empty string
 - `{DictationID}` is not a valid GUID
-- The requested user is not member of the Enterprise subsystem
+- The requested user is not member of the `SpeechExec Enterprise` subsystem
 
 The call returns with `HTTP 401-Unauthorized` if the authentication prerequisites are not fulfilled.
 
