@@ -61,6 +61,8 @@ The call returns with `HTTP 400-BadRequest` in the following cases:
 - The ID field is null or empty
 - Any of the Datetime* fields has invalid data. These fields must specified in the following format: `yyyy-MM-dd HH:mm:ss`
 
+The call returns with `HTTP 401-Unauthorized` if the authentication prerequisites are not fulfilled.
+
 The call returns with `HTTP 409-Conflict` in the following cases:
 
 - A master data record with the same ID already exists in the DB
@@ -81,6 +83,13 @@ A test application can be found here:
 Request:
 
 POST https://my.service.url/SEEAppInterface/masterdata/dataitems
+
+Headers:
+```
+x-sps-api-key: "<api_key_supported_by_server>"
+```
+
+Body:
 ``` json
 {
     "CRI": "2CBA31B2-CCCA-40A3-BEA8-771F25A748F6",
@@ -102,11 +111,39 @@ Response:
 }
 ```
 
+### Return with `HTTP 401-Unauthorized` error response due to not matching API key
+
+Request:
+
+POST https://my.service.url/SEEAppInterface/masterdata/dataitems
+
+Headers:
+```
+x-sps-api-key: ""
+```
+
+Response:
+
+401 Unauthorized
+``` json
+{
+    "CRI": "2CBA31B2-CCCA-40A3-BEA8-771F25A748F6",
+    "FailureCode": "Invalid_api_key"
+}
+```
+
 ### Return with `HTTP 409-Conflict` due to primary key (ID) violation
 
 Request:
 
 POST https://my.service.url/SEEAppInterface/masterdata/dataitems
+
+Headers:
+```
+x-sps-api-key: "<api_key_supported_by_server>"
+```
+
+Body:
 ``` json
 {
     "CRI": "2CBA31B2-CCCA-40A3-BEA8-771F25A748F6",
