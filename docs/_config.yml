@@ -1,3 +1,7 @@
+
+# For the time being, the "remote_theme" must be pinned to the specific 0.3.3 version, as later releases
+# of 'just-the-docs' seem to break navigation. It seems newer 'just-the-docs' versions handle
+# 'parent' and 'grand_parent' front matter metadata differently.
 remote_theme: pmarsceill/just-the-docs@v0.3.3
 title: Enterprise Integrations
 
